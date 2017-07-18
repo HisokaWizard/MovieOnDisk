@@ -42,9 +42,16 @@ std::vector<std::string> MovieList::search_file_on_disk(std::string path_hard_di
 void MovieList::create_file_movie(std::string path_to_onedrive, std::vector<std::string> list)
 {
    std::ofstream fout(path_to_onedrive);
-   fout.clear();
-   for (int i = 0, q = list.size(); i < q; i++) {
-      fout << i + 1 << ". " << list[i] << "\n";
+   std::cout << "Адрес создания файла с фильмами: " << path_to_onedrive << std::endl;
+   if (!fout.is_open()) {
+      std::cout << "Файл на запись не может быть открыт!\n";
+   }
+   else {
+      fout.clear();
+      for (int i = 0, q = list.size(); i < q; i++) {
+         fout << i + 1 << ". " << list[i] << "\n";
+      }
+      std::cout << "Файл создан! по адресу: "  << path_to_onedrive << std::endl;
    }
    fout.close();
 }
@@ -58,12 +65,12 @@ void MovieList::read_config()
    config.push_back("");
    std::ifstream fin("config_movie.txt");
    if (!fin.is_open()) // если файл не открыт
-      std::cout << "Файл не может быть открыт!\n"; // сообщить об этом
+      std::cout << "Файл config не может быть открыт!\n"; // сообщить об этом
    else
    {
       for (int i = 0, q = config.size(); i < q; i++) {
          fin.getline(buff, 100);
-         std::cout << buff;
+         std::cout << buff << std::endl;
          config[i] = buff;
       }
    }
